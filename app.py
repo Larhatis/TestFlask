@@ -16,6 +16,14 @@ def login():
         else:
             return 'Nom d\'utilisateur ou mot de passe incorrect.'
     return render_template('connexion.html')
+@app.route('/delete_note/<int:note_id>', methods=['POST'])
+def delete_note(note_id):
+    with open('notes.txt', 'r') as f:
+        notes = f.readlines()
+    notes.pop(note_id)
+    with open('notes.txt', 'w') as f:
+        f.writelines(notes)
+    return redirect(url_for('notes'))
 
 @app.route('/notes', methods=['GET', 'POST'])
 def notes():
